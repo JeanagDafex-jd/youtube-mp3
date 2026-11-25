@@ -3,6 +3,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 const { spawn } = require('child_process');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('ffmpeg-static');
@@ -22,7 +24,17 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 // Ruta del ejecutable de yt-dlp (por defecto se busca en el PATH).
 const YTDLP_PATH = process.env.YTDLP_PATH || 'yt-dlp';
 // Cookies opcionales (ayudan con videos con restricción de edad o bloqueos).
-const COOKIES_FILE = process.env.YTDLP_COOKIES_FILE || '';
+let COOKIES_FILE = process.env.YTDLP_COOKIES_FILE || '';
+// En la nube es más fácil pegar el contenido del cookies.txt en una variable de entorno.
+if (!COOKIES_FILE && process.env.YTDLP_COOKIES_CONTENT) {
+  try {
+    COOKIES_FILE = path.join(os.tmpdir(), 'yt-cookies.txt');
+    fs.writeFileSync(COOKIES_FILE, process.env.YTDLP_COOKIES_CONTENT, { mode: 0o600 });
+  } catch (err) {
+    console.warn('No se pudo escribir el archivo de cookies:', err.message);
+    COOKIES_FILE = '';
+  }
+}
 const COOKIES_BROWSER = process.env.YTDLP_COOKIES_BROWSER || ''; // ej: chrome, firefox
 
 /* ------------------------------------------------------------------ */
