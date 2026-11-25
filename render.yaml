@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: youtube-mp3
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ACCESS_KEY
+        sync: false
+      - key: MAX_DURATION_MIN
+        value: "30"
