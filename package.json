@@ -1,0 +1,20 @@
+{
+  "name": "youtube-mp3",
+  "version": "2.0.0",
+  "description": "Descarga el audio de un video de YouTube como MP3 usando yt-dlp (uso personal)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3"
+  }
+}

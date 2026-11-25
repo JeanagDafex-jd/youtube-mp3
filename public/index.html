@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07060d" />
+  <title>JeanagMusic · YouTube a MP3</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="min-h-screen text-[#f4f2ff] antialiased">
+  <!-- Luces de fondo -->
+  <div class="orb orb-rose" aria-hidden="true"></div>
+  <div class="orb orb-violet" aria-hidden="true"></div>
+  <div class="orb orb-blue" aria-hidden="true"></div>
+
+  <main class="relative z-10 mx-auto flex min-h-screen w-full max-w-xl flex-col justify-center px-4 py-10 sm:px-6">
+
+    <header class="mb-8 text-center">
+      <h1 class="title text-4xl font-extrabold leading-[1.05] sm:text-6xl">
+        Pega el enlace,<br />llévate el MP3
+      </h1>
+      <p class="mx-auto mt-4 max-w-md text-base text-[#a29fb8] sm:text-lg">
+        Copia el link de un video de YouTube y descarga su audio en un archivo MP3 listo para escuchar.
+      </p>
+    </header>
+
+    <!-- Buscador -->
+    <form id="search-form" class="glass search-bar rounded-3xl p-2.5" autocomplete="off" novalidate>
+      <label for="url" class="sr-only">Enlace del video de YouTube</label>
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div class="flex min-w-0 flex-1 items-center gap-2 rounded-2xl px-3">
+          <svg class="h-5 w-5 shrink-0 text-[#a29fb8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5" />
+            <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5" />
+          </svg>
+          <input
+            id="url"
+            type="url"
+            inputmode="url"
+            placeholder="https://www.youtube.com/watch?v=..."
+            class="h-12 w-full min-w-0 bg-transparent text-base text-[#f4f2ff] placeholder:text-[#6f6c86] focus:outline-none"
+          />
+        </div>
+
+        <div class="flex gap-2">
+          <button type="button" id="paste-btn" class="btn-ghost h-12 flex-1 rounded-2xl px-5 text-sm font-semibold sm:flex-none">
+            Pegar
+          </button>
+          <button type="submit" id="search-btn" class="btn-primary h-12 flex-1 rounded-2xl px-6 text-sm font-bold sm:flex-none">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Mensaje de error -->
+    <div id="error-box" class="error-box mt-4 hidden rounded-2xl px-4 py-3 text-sm" role="alert">
+      <span id="error-text"></span>
+    </div>
+
+    <!-- Cargando -->
+    <section id="loading" class="glass mt-6 hidden rounded-3xl px-6 py-10 text-center" aria-live="polite">
+      <div class="eq mx-auto" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <p class="mt-5 text-sm text-[#a29fb8]">Buscando el video…</p>
+    </section>
+
+    <!-- Resultado -->
+    <section id="result" class="glass mt-6 hidden overflow-hidden rounded-3xl" aria-live="polite">
+      <div class="relative aspect-video w-full bg-black/40">
+        <img id="thumb" alt="" class="h-full w-full object-cover" />
+        <span id="duration" class="duration-badge absolute bottom-3 right-3 rounded-lg px-2.5 py-1 text-xs font-semibold"></span>
+      </div>
+
+      <div class="p-5 sm:p-6">
+        <h2 id="title" class="line-clamp-2 text-xl font-bold leading-snug sm:text-2xl"></h2>
+        <p id="author" class="mt-1.5 text-sm text-[#a29fb8]"></p>
+
+        <button id="download-btn" type="button" class="btn-primary download mt-6 flex h-14 w-full items-center justify-center gap-3 rounded-2xl text-base font-bold">
+          <span id="download-icon" aria-hidden="true">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+            </svg>
+          </span>
+          <span id="download-label">Descargar MP3</span>
+        </button>
+      </div>
+    </section>
+
+    <p class="mt-10 text-center text-xs text-[#6f6c86]">
+      Creado por Mr Antuan alias Diosito
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
